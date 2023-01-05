@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     float startTime = 3;
     float direction = 1;
     Rigidbody2D enemyRb ;
+    public GameObject projectilePrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,7 @@ public class Enemy : MonoBehaviour
 
         if(timer < 0)
         {
+            Launch();
             direction = -direction;
             timer = startTime;
         }
@@ -35,6 +38,14 @@ public class Enemy : MonoBehaviour
 
         enemyRb.MovePosition(position);
     
+    }
+
+    void Launch()
+    {
+        GameObject projectileObject = Instantiate(projectilePrefab, enemyRb.position + Vector2.down * 0.5f, Quaternion.identity);
+
+        PlayerProjectile projectile = projectileObject.GetComponent<PlayerProjectile>();
+        projectile.Launch(new Vector2(0,-1), 500);
     }
 
     
